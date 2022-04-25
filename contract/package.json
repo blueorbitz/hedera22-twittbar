@@ -1,0 +1,20 @@
+{
+  "name": "hedera-hack22-social-vault",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "solc-lookup": "solcjs --bin solidity/LookupContract.sol -o solidity",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.13.1",
+    "dotenv": "^16.0.0",
+    "solc": "^0.8.13"
+  },
+  "devDependencies": {
+  }
+}
