@@ -4,17 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "solc-lookup": "solcjs --bin solidity/LookupContract.sol -o solidity",
+    "compile-sol": "solcjs --bin contracts/TwitterVault.sol -o contracts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@buidlerlabs/hedera-strato-js": "^0.7.3",
     "@hashgraph/sdk": "^2.13.1",
     "dotenv": "^16.0.0",
     "solc": "^0.8.13"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
