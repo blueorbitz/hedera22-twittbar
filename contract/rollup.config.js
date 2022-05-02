@@ -14,13 +14,13 @@ export default async function getConfig() {
     input: './src/index.ts',
     output: [ {
       file: './dist/hedera-strato-hashpack.js',
-      format: 'cjs',
-      // sourcemap: true,
+      format: 'esm',
+      sourcemap: true,
     } ],
     plugins: [
       strato({ 
         includeCompiler: true,
-        // sourceMap: true, 
+        sourceMap: true, 
       }),
       resolve({
         extensions: [ '.js', '.ts' ],
@@ -28,7 +28,7 @@ export default async function getConfig() {
         preferBuiltins: false,
       }),
       commonjs({
-        esmExternals: false,
+        esmExternals: true,
         requireReturnsDefault: "preferred",
       }),
       nodePolyfills({
