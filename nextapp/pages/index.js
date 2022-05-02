@@ -1,10 +1,25 @@
 import Head from 'next/head'
+import { useState, useEffect } from 'react'
+import axios from "axios"
 import { Hbar, TransactionId, TransactionReceipt } from '@hashgraph/sdk'
 import { ToastContainer, toast } from 'react-toastify'
 import styles from '../styles/Home.module.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home() {
+  const [accountBalance, setAccountbalance] = useState('0 ℏ');
+
+  useEffect(() => {
+    async function fetchData() {
+      const accountInfoUrl = 'https://testnet.mirrornode.hedera.com/api/v1/accounts/';
+      const resp = await axios.get(accountInfoUrl + window.hedera.account.id.toString());
+      const balance = resp.data.balance.balance;
+      setAccountbalance(Hbar.fromTinybars(balance).toString());
+      console.log('Load account balance', accountBalance); 
+    }
+    fetchData();
+  }, []);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const username = event.target[0].value;
@@ -62,7 +77,7 @@ export default function Home() {
               <span className="fs-4">Home</span>
             </a>
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-              <span className="py-2 me-3 text-dark text-decoration-none">Account balance: 10.00ℏ</span>
+              <span className="py-2 me-3 text-dark text-decoration-none">Account balance: {accountBalance}</span>
               <a className="py-2 text-dark text-decoration-none" href="#">Logout</a>
             </nav>
           </div>
