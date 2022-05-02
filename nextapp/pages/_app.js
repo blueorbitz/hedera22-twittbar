@@ -1,7 +1,19 @@
+import Head from "next/head";
+import Script from "next/script";
+import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Script src="/hedera-strato-hashpack-esm.js" type="module" />
+      <Script src="/app.mjs"  type="module" />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp
