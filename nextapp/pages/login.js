@@ -24,7 +24,7 @@ export default function Signin() {
       <main className={styles.formSignin}>
         <form>
           <h1 className="mb-1 fw-normal">TwittBar</h1>
-          <p className="mb-3">Vault to transfer Hbar(ℏ) via Twitter handle</p>
+          <p className="mb-3">Transfer to Hbar(ℏ) vault via Twitter@handle</p>
           <div className="w-100 btn btn-lg btn-primary" onClick={onClick}>Connect Wallet</div>
           <img className="mt-5" src="/built-on-hedera.png" alt="" width="120"></img>
           <p className="mb-3 text-muted">choong.pw &copy; 2022</p>

@@ -1,12 +1,15 @@
 import Head from 'next/head'
+import { useState } from 'react'
 import AppHeader from '../components/AppHeader'
 import AppFooter from '../components/AppFooter'
 import AppTransfer from '../components/AppTransfer'
+import AppRecent from '../components/AppRecent'
 import { ToastContainer, toast } from 'react-toastify'
 import styles from '../styles/Home.module.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home() {
+  const [refreshComponent, setRefreshComponent] = useState(0);
 
   return (
     <div className={styles.body}>
@@ -17,7 +20,8 @@ export default function Home() {
       </Head>
       <div className="container py-3">
         <AppHeader />
-        <AppTransfer />
+        <AppTransfer refreshComponent={refreshComponent} setRefreshComponent={setRefreshComponent} />
+        <AppRecent refreshComponent={refreshComponent} />
         <AppFooter />
         <ToastContainer
           position="bottom-left"

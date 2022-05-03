@@ -1,13 +1,18 @@
 import { TransactionId } from '@hashgraph/sdk'
 import { toast } from 'react-toastify'
+import axios from "axios"
 import styles from '../styles/Home.module.css'
 import 'react-toastify/dist/ReactToastify.css'
 
-export default function AppTransfer() {
+export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
   const onSubmit = async (event) => {
     event.preventDefault();
+
     const username = event.target[0].value;
     const amount = parseFloat(event.target[1].value);
+
+    if (confirm(`This transaction will be charged 1% fee.\nProceed to transfer ${amount} ℏ to "${username}"?`) === false)
+      return;
     console.log(`Transfering to ${username} for ${amount}ℏ`);
 
     try {
@@ -24,6 +29,15 @@ export default function AppTransfer() {
       const liveContract = await session.getLiveContract({ id: contractId, abi: vaultContract.interface });
       const receiptsSubscription = session.subscribeToReceiptsWith(
         ({ transaction, receipt }) => {
+          axios.post('/api/transaction', {
+            transactionId: `${transaction.transactionId}`,
+            from: `${liveContract.session.wallet.account.id}`,
+            to: username,
+            timestamp: new Date().getTime(),
+            amount: amount,
+          })
+            .then(() => setRefreshComponent(refreshComponent + 1));
+
           console.log(`Transaction ${transaction.transactionId} completed!`);
           toast.success(`Transaction ${transaction.transactionId} completed!`);
         }
