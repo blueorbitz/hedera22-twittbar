@@ -58,10 +58,13 @@ export default function AppRecent({ refreshComponent }) {
                 aria-current="true"
                 target="_blank"
               >
-                <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
+                <img src="/black-cutout.png" alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
                 <div className="d-flex gap-2 w-100 justify-content-between">
                   <div>
-                    <h6 className="mb-0">{`${new Hbar(amount).toString()} to @${to}`}</h6>
+                    <h6 className="mb-0">
+                      {`${new Hbar(amount).toString()} to `}
+                      <strong><i><a href={`https://twitter.com/${to}`} target="_blank">{to}</a></i></strong>
+                    </h6>
                     <p className="mb-0 mt-1 opacity-75"><pre className='mb-0'>{transactionId}</pre></p>
                   </div>
                   <small className="opacity-50 text-nowrap">{timeSince(new Date(timestamp)) + ' ago'}</small>

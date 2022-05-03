@@ -28,7 +28,7 @@ export default function AppHeader() {
     <header>
       <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
         <a href="/" className="d-flex align-items-center text-dark text-decoration-none">
-          <span className="fs-4">Home</span>
+          <span className="fs-4">Home <small className='text-muted'>testnet</small></span>
         </a>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
           <span className="py-2 me-3 text-dark text-decoration-none">Account balance: {accountBalance}</span>
