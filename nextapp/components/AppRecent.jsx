@@ -8,9 +8,10 @@ export default function AppRecent({ refreshComponent }) {
   const [skip, setSkip] = useState(0);
   const [transactions, setTransactions] = useState([]);
   
-  const fetchData = async () => {
+  const fetchData = async ({ skip, limit }) => {
     const params = {
-      skip, limit,
+      skip,
+      limit,
       from: `${window.hedera.account.id}`
     };
     const res = await axios.get('/api/transaction', { params });
@@ -21,8 +22,9 @@ export default function AppRecent({ refreshComponent }) {
     if (skip === -1)
       return;
 
-    await setSkip(skip + limit);
-    const data = await fetchData();
+    const _skip = skip + limit; // due to delay from the set function
+    setSkip(_skip);
+    const data = await fetchData({ skip: _skip, limit });
     if (data.length === 0)
       setSkip(-1)
 
@@ -33,8 +35,9 @@ export default function AppRecent({ refreshComponent }) {
   useEffect(() => {
     async function load() {
       // reset
-      setSkip(0);
-      const data = await fetchData();
+      const _skip = 0; // due to delay from the set function
+      setSkip(_skip);
+      const data = await fetchData({ skip: _skip, limit });
       setTransactions(data);
     }
     load();
