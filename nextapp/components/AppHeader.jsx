@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Hbar } from '@hashgraph/sdk'
-import axios from "axios"
+import { useRouter } from 'next/router';
 
 export default function AppHeader() {
+  const router = useRouter();
   const [accountBalance, setAccountbalance] = useState('0 ℏ');
 
   useEffect(() => {
@@ -10,18 +10,18 @@ export default function AppHeader() {
       if (window.hedera === true)
         return;
 
-      const accountInfoUrl = 'https://testnet.mirrornode.hedera.com/api/v1/accounts/';
-      const resp = await axios.get(accountInfoUrl + window.hedera.account.id.toString());
-      const balance = resp.data.balance.balance;
-      setAccountbalance(Hbar.fromTinybars(balance).toString());
-      console.log('Load account balance', accountBalance); 
+      const wallet = await window.hedera.getAccountBalance();
+      setAccountbalance(wallet.hbars.toString());
     }
-    fetchData();
+    const timer = setInterval(fetchData, 1500);
+    return () => setInterval(timer);
   }, []);
 
   const onLogout = async () => {
-    const data = await axios.get('/api/hello');
-    console.log(data);
+    if (window.hedera.constructor.name !== 'HashPackWallet')
+      return;
+    window.hedera.wipePairingData();
+    router.push({ pathname: '/login' });
   }
 
   return (
@@ -31,7 +31,7 @@ export default function AppHeader() {
           <span className="fs-4">Home <small className='text-muted'>testnet</small></span>
         </a>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <span className="py-2 me-3 text-dark text-decoration-none">Account balance: {accountBalance}</span>
+          <span className="py-2 me-3 text-primary text-decoration-none">Balance {accountBalance}</span>
           <a className="py-2 text-dark text-decoration-none" href="#" onClick={onLogout}>Logout</a>
         </nav>
       </div>

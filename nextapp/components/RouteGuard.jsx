@@ -27,11 +27,25 @@ function RouteGuard({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function authCheck(url) {
+  async function authCheck(url) {
     // redirect to login page if accessing a private page and not logged in 
     const publicPaths = ['/login'];
     const path = url.split('?')[0];
-    // window.hedera = true;
+    if (localStorage.getItem('hashpack-session') !== null) {
+      await new Promise(resolve => {
+        console.log('Loading from "hashpack-session"');
+        const timer = setInterval(() => {
+          if (window.connectToHashPack == null || window.strato == null)
+            return; // wait for app.mjs to load finish
+
+          console.log('hashpack lib is ready...');
+          clearInterval(timer);
+          resolve();
+        }, 300);
+      });
+      await window.connectToHashPack();
+    }
+
     if (!window.hedera && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({

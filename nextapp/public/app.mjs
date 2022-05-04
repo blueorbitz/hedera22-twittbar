@@ -1,7 +1,5 @@
 import * as strato from './hedera-strato-hashpack-esm.js';
 const { 
-  ApiSession, 
-  Json,
   HashPackWallet 
 } = strato;
 
