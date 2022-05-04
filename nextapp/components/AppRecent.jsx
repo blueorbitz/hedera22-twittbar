@@ -7,7 +7,7 @@ export default function AppRecent({ refreshComponent }) {
   const limit = 3;
   const [skip, setSkip] = useState(0);
   const [transactions, setTransactions] = useState([]);
-  
+
   const fetchData = async ({ skip, limit }) => {
     const params = {
       skip,
@@ -50,39 +50,46 @@ export default function AppRecent({ refreshComponent }) {
     <div className='d-flex justify-content-center pb-5'>
       <div className="list-group" style={{ maxWidth: '570px' }}>
         {
-          transactions.map(({ transactionId, from, to, amount, timestamp }, index) => {
+          transactions.map(({ transactionId, from, to, amount, timestamp, twitter }, index) => {
             const transactionPath = transactionId.split('@').join('').split('.').join('');
+            const profileImage = twitter.profile_image_url || "/black-cutout.png";
 
             return (
-              <a
+              <div
                 key={transactionId}
                 href={`https://testnet.dragonglass.me/transactions/${transactionPath}`}
                 className="list-group-item list-group-item-action d-flex gap-3 py-3"
                 aria-current="true"
                 target="_blank"
               >
-                <img src="/black-cutout.png" alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
+                <img src={profileImage} alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
                 <div className="d-flex gap-2 w-100 justify-content-between">
                   <div>
                     <h6 className="mb-0">
                       {`${new Hbar(amount).toString()} to `}
-                      <strong><i><a href={`https://twitter.com/${to}`} target="_blank">{to}</a></i></strong>
+                      <a href={`https://twitter.com/${to}`} target="_blank">
+                        <strong><i>{to}</i></strong>
+                        {
+                          twitter.verified &&
+                          <i className="bi bi-patch-check-fill text-primary mx-1"></i>
+                        }
+                      </a>
                     </h6>
-                    <p className="mb-0 mt-1 opacity-75"><pre className='mb-0'>{transactionId}</pre></p>
+                    <div className="mb-0 mt-1 opacity-75"><pre className='mb-0'>{transactionId}</pre></div>
                   </div>
                   <small className="opacity-50 text-nowrap">{timeSince(new Date(timestamp)) + ' ago'}</small>
                 </div>
-              </a>
+              </div>
             );
           })
         }
         {
           skip === -1 ? null :
-          <div className="list-group-item list-group-item-action d-flex gap-3 py-3" onClick={loadMore}>
-            <div className="d-flex gap-2 w-100 justify-content-center">
-              <small className="opacity-50 text-nowrap">more...</small>
+            <div className="list-group-item list-group-item-action d-flex gap-3 py-3" onClick={loadMore}>
+              <div className="d-flex gap-2 w-100 justify-content-center">
+                <small className="opacity-50 text-nowrap">more...</small>
+              </div>
             </div>
-          </div>
         }
       </div>
     </div>

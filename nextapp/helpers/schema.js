@@ -26,4 +26,10 @@ const querySchema = Joi.object({
   skip: Joi.number(),
 });
 
-export { insertSchema, querySchema };
+const userValidateSchema = Joi.object({
+  handle: Joi.string()
+    .lowercase()
+    .required(),
+});
+
+export { insertSchema, querySchema, userValidateSchema };
