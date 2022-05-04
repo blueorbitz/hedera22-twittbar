@@ -35,8 +35,10 @@ async function main() {
   const { liveContract } = await ConnectToContract();
   console.log(Object.keys(liveContract.interface.functions));
 
-  console.log(await liveContract.checkBalance());
-  console.log(await liveContract.vaultLength("elon"));
+  const balance = await liveContract.checkBalance({ onlyReceipt: false });
+  console.log('Balance: ', balance);
+  const vaultLength = await liveContract.vaultLength("elon");
+  console.log('Vault Length: ', `${vaultLength}`);
 
   // const metaArgs = {
   //   amount: new Hbar(1),

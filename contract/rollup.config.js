@@ -13,7 +13,7 @@ export default async function getConfig() {
     context: 'window',
     input: './src/index.ts',
     output: [ {
-      file: './dist/hedera-strato-hashpack.js',
+      file: './dist/hedera-strato-hashpack-esm.js',
       format: 'esm',
       sourcemap: true,
     } ],

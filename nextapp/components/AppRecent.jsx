@@ -52,7 +52,7 @@ export default function AppRecent({ refreshComponent }) {
         {
           transactions.map(({ transactionId, from, to, amount, timestamp, twitter }, index) => {
             const transactionPath = transactionId.split('@').join('').split('.').join('');
-            const profileImage = twitter.profile_image_url || "/black-cutout.png";
+            const profileImage = (twitter && twitter.profile_image_url) || "/black-cutout.png";
 
             return (
               <div
@@ -70,7 +70,7 @@ export default function AppRecent({ refreshComponent }) {
                       <a href={`https://twitter.com/${to}`} target="_blank">
                         <strong><i>{to}</i></strong>
                         {
-                          twitter.verified &&
+                          twitter && twitter.verified &&
                           <i className="bi bi-patch-check-fill text-primary mx-1"></i>
                         }
                       </a>

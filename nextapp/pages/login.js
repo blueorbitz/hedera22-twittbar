@@ -9,6 +9,8 @@ export default function Signin() {
 
   const onClick = async () => {
     try {
+      if (window.connectToHashPack == null)
+        throw "Please wait. Initializing component...";
       await window.connectToHashPack();
       router.push('/');
     } catch (error) {

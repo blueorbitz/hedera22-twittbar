@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  env: {
+    CONTRACT_ID: '0.0.34376129',
+  },
 }
 
-const withTM = require('next-transpile-modules')(['hashconnect'])
-
-module.exports = withTM(nextConfig);
+module.exports = nextConfig;
