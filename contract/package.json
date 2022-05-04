@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@buidlerlabs/hedera-strato-js": "^0.7.3",
+    "@buidlerlabs/hedera-strato-js": "0.7.3",
     "@hashgraph/sdk": "^2.13.1",
     "dotenv": "^16.0.0",
     "solc": "^0.8.13"

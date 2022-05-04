@@ -1,6 +1,6 @@
 import clientPromise from '../helpers/mongodb';
 import { insertSchema, querySchema } from '../helpers/schema';
-import HttpError from '../helpers/HttpError';
+import { HttpError } from '../helpers/HttpError';
 import { TwitterApi } from 'twitter-api-v2';
 
 const MONGODB_COLLECTION = 'test';

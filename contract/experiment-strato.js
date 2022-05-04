@@ -11,7 +11,7 @@ async function CreateNewContract() {
     }
   );
 
-  const vaultContract = await Contract.newFrom({ path: './TwitterVault.sol' });
+  const vaultContract = await Contract.newFrom({ path: './TwitterVaultAPI.sol' });
   const liveContract = await session.upload(vaultContract, { _file: { fileMemo: "Hello Strato" } });
   console.log(`Contract Create ContractId: ${liveContract.id} (Solidity ${liveContract.id.toSolidityAddress()})`);
 
@@ -26,7 +26,7 @@ async function ConnectToContract(contractId = "0.0.34376129") {
     }
   );
 
-  const vaultContract = await Contract.newFrom({ path: './TwitterVault.sol' });
+  const vaultContract = await Contract.newFrom({ path: './TwitterVaultAPI.sol' });
   const liveContract = await session.getLiveContract({ id: contractId, abi: vaultContract.interface });
   return { session, liveContract };
 }
