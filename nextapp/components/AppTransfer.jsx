@@ -31,7 +31,7 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
         }
       });
 
-      const contractId = "0.0.34376129"; // TODO: to env
+      const contractId = process.env.CONTRACT_ID; // TODO: to env
       const vaultContract = await Contract.newFrom({ path: './TwitterVaultAPI.sol' });
       const liveContract = await session.getLiveContract({ id: contractId, abi: vaultContract.interface });
       const receiptsSubscription = session.subscribeToReceiptsWith(
