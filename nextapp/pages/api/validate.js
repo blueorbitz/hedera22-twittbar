@@ -1,4 +1,4 @@
-import { TwitterApi } from 'twitter-api-v2';
+import TwitterClient from '../../helpers/TwitterClient';
 import { userValidateSchema } from '../../helpers/schema';
 import HttpErrorHandler, { HttpError } from '../../helpers/HttpError';
 
@@ -13,13 +13,13 @@ async function validateUser(query) {
   if (validate.error)
     throw new HttpError(validate.error.message, 400);
 
-  const client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN).readOnly;
-  const results = await client.v2.userByUsername(validate.value.handle, {
-    'user.fields': ['profile_image_url', 'verified'],
+  const client = TwitterClient.v2();
+  const result = await client.get('users/by/username/' + validate.value.handle, {
+    'user.fields': 'profile_image_url,verified',
   });
 
-  if (results.errors)
-    throw new HttpError(results.errors[0].detail, 404);
+  if (result.errors)
+    throw new HttpError(result.errors[0].detail, 404);
 
-  return results.data;
+  return result.data;
 }

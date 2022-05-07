@@ -1,7 +1,7 @@
 import clientPromise from '../helpers/mongodb';
 import { insertSchema, querySchema } from '../helpers/schema';
 import { HttpError } from '../helpers/HttpError';
-import { TwitterApi } from 'twitter-api-v2';
+import TwitterClient from '../helpers/TwitterClient';
 
 const MONGODB_COLLECTION = 'test'; // Todo: update to better name
 
@@ -28,9 +28,11 @@ async function getRecent(query) {
 
   // get twitter user details
   const uniqueTo = results.map(o => o.to).filter((value, index, self) => self.indexOf(value) === index);
-  const tclient = new TwitterApi(process.env.TWITTER_BEARER_TOKEN).readOnly;
-  const tresults = await tclient.v2.usersByUsernames(uniqueTo, {
-    'user.fields': ['profile_image_url','verified'],
+
+  const client = TwitterClient.v2();
+  const tresults = await client.get('users/by', {
+    'usernames': uniqueTo.join(','),
+    'user.fields': 'profile_image_url,verified',
   });
 
   const tuserMap = {};
@@ -44,14 +46,40 @@ async function postRecent(body) {
   if (validate.error)
     throw new HttpError(validate.error.message, 400);
 
-  const client = await clientPromise;
-  const db = client.db(process.env.MONGODB_DB);
+  const mclient = await clientPromise;
+  const db = mclient.db(process.env.MONGODB_DB);
 
   const transaction = validate.value;
-  const result = await db.collection(MONGODB_COLLECTION)
+  const mresult = await db.collection(MONGODB_COLLECTION)
     .insertOne(transaction);
 
-  return result;
+  // sent twitter direct message
+  if (process.env.DISABLE_DM === 'true')
+    return mresult;
+
+  const t2client = TwitterClient.v2();
+  const t2result = await t2client.get('users/by/username/' + validate.value.handle);
+  const recipientId = t2result.data.id;
+
+  const t1client = TwitterClient.v1();
+  const t1result = await t1client.post(
+    "direct_messages/events/new",
+    {
+      event: {
+        type: 'message_create',
+        message_create: {
+          target: {
+            recipient_id: recipientId,
+          },
+          message_data: {
+            text: `You have receive ${validate.value.amount} ℏ from ${validate.value.from}.\nGo to ${process.env.APP_URL} to setup and receive ℏ.`
+          },
+        },
+      }
+    },
+  );
+
+  return t1result;
 }
 
 export { getRecent, postRecent };
