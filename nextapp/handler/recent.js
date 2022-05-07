@@ -72,7 +72,7 @@ async function postRecent(body) {
             recipient_id: recipientId,
           },
           message_data: {
-            text: `You have receive ${validate.value.amount} ℏ from ${validate.value.from}.\nGo to ${process.env.APP_URL} to setup and receive ℏ.`
+            text: `You have receive ${validate.value.amount} ℏ from ${validate.value.from}.\nGo to ${process.env.NEXTAUTH_URL} to setup and receive ℏ.`
           },
         },
       }

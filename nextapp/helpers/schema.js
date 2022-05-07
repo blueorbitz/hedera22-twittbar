@@ -36,7 +36,7 @@ const accountMapSchema = Joi.object({
   handle: Joi.string()
     .lowercase()
     .required(),
-  from: Joi.string()
+  account: Joi.string()
     .pattern(/^\d.\d.\d+$/, 'Hedera Account')
     .required(),
 });

@@ -6,21 +6,39 @@ import { ToastContainer, toast } from 'react-toastify'
 import styles from '../styles/Home.module.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { signOut, useSession } from 'next-auth/react';
+import axios from 'axios';
 
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
-  const [accountMap, setAccountMap] = useState({});
 
   useEffect(() => {
     if (!session)
       router.push({ pathname: '/' });
   }, [session]);
 
-  useEffect(() => {
-    (async () => {
-    })();
-  }, [])
+  const onMapAccount = async (event) => {
+    event.preventDefault();
+    try {
+      const account = document.getElementsByName('accountId')[0].value;
+      await axios.post('/api/contract/map', { account });
+      toast.success(`Successfully release pending fund.`);
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  }
+
+  const onReleaseFund = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post('/api/contract/release');
+      toast.success(`Successfully release pending fund.`);
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  }
 
   return (
     <div className={styles.body}>
@@ -48,26 +66,31 @@ export default function Home() {
         <main className={styles.customForm}>
           <div className='d-flex justify-content-center'>
             <div className='text-center'>
-            <h4>How to receive the Fund</h4>
-            <div>1. <a
-              href="https://chrome.google.com/webstore/detail/hashpack/gjagmgiddbbciopjhllkdnddhcglnemk"
-              target="_blank">
-              Install Hashpack extension
-            </a></div>
-            <div>2. <a
-              href="https://www.hashpack.app/post/how-to-create-your-first-account-with-hashpack"
-              target="_blank"
-            >
-              Create your first account with HashPack
-            </a></div>
-            <div>3. Paste your account Id here.</div>
-            <input type="text" style={{ width: '300px' }}
-              className="form-control" name="accountId"
-              placeholder='eg. 0.0.312334'
-            />
-            <button type="submit" className="mt-3 btn btn-primary">
-              Release Fund
-            </button>
+              <h4>How to receive the Fund</h4>
+              <div>1. <a
+                href="https://chrome.google.com/webstore/detail/hashpack/gjagmgiddbbciopjhllkdnddhcglnemk"
+                target="_blank">
+                Install Hashpack extension
+              </a></div>
+              <div>2. <a
+                href="https://www.hashpack.app/post/how-to-create-your-first-account-with-hashpack"
+                target="_blank"
+              >
+                Create your first account with HashPack
+              </a></div>
+              <div>3. Paste your account Id here.</div>
+              <input type="text" style={{ width: '300px' }}
+                className="form-control" name="accountId"
+                placeholder='eg. 0.0.312334'
+              />
+              <div className="btn-group">
+                <button className="mt-3 btn btn-secondary" onClick={onMapAccount}>
+                  Map Account
+                </button>
+                <button className="mt-3 btn btn-primary" onClick={onReleaseFund}>
+                  Release Fund
+                </button>
+              </div>
             </div>
           </div>
         </main>
