@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import { isHashpackConnected } from '../helpers/utils';
 
 export default function AppHeader() {
   const router = useRouter();
@@ -7,20 +8,20 @@ export default function AppHeader() {
 
   useEffect(() => {
     async function fetchData() {
-      if (window.hedera === true)
+      if (isHashpackConnected() === false)
         return;
 
-      const wallet = await window.hedera.getAccountBalance();
+      const wallet = await window.hashpack.getAccountBalance();
       setAccountbalance(wallet.hbars.toString());
     }
     const timer = setInterval(fetchData, 1500);
-    return () => setInterval(timer);
+    return () => clearInterval(timer);
   }, []);
 
   const onLogout = async () => {
-    if (window.hedera.constructor.name !== 'HashPackWallet')
+    if (isHashpackConnected() === false)
       return;
-    window.hedera.wipePairingData();
+    window.hashpack.wipePairingData();
     router.push({ pathname: '/login' });
   }
 
@@ -38,7 +39,7 @@ export default function AppHeader() {
 
       <div className="pricing-header p-3 pb-md-4 mx-auto text-center">
         <h1 className="display-4 fw-normal">TwittBar</h1>
-        <p className="fs-5 text-muted">Vault to transfer Hbar(ℏ) via Twitter handle</p>
+        <p className="fs-5 text-muted">Make Hbar (ℏ) transfer simple via Twitter@handle</p>
       </div>
     </header>
   );

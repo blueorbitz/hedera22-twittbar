@@ -32,4 +32,13 @@ const userValidateSchema = Joi.object({
     .required(),
 });
 
-export { insertSchema, querySchema, userValidateSchema };
+const accountMapSchema = Joi.object({
+  handle: Joi.string()
+    .lowercase()
+    .required(),
+  from: Joi.string()
+    .pattern(/^\d.\d.\d+$/, 'Hedera Account')
+    .required(),
+});
+
+export { insertSchema, querySchema, userValidateSchema, accountMapSchema };

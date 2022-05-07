@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Script from "next/script";
+import { SessionProvider } from 'next-auth/react';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/globals.css'
-import { RouteGuard } from '../components/RouteGuard';
+import RouteGuard from '../components/RouteGuard';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,9 +13,11 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Script src="/hedera-strato-hashpack-esm.js" type="module" />
       <Script src="/app.mjs" type="module" />
-      <RouteGuard>
-        <Component {...pageProps} />
-      </RouteGuard>
+      <SessionProvider session={pageProps.session}>
+        <RouteGuard>
+          <Component {...pageProps} />
+        </RouteGuard>
+      </SessionProvider>
     </>
   );
 }

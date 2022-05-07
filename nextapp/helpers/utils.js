@@ -27,4 +27,20 @@ function timeSince(date) {
   return Math.floor(seconds) + " seconds";
 }
 
-export { timeSince }
+function isHashpackConnected() {
+  const HASHPACK_STORAGE_KEY = "hashpack-session";
+
+  if (!window.hashpack)
+    return false;
+  
+  if (window.hashpack && window.hashpack.constructor.name !== 'HashPackWallet')
+    return false;
+  
+  const localWalletData = localStorage.getItem(HASHPACK_STORAGE_KEY);
+  if (localWalletData == null)
+    return false;
+
+  return true;
+}
+
+export { timeSince, isHashpackConnected }

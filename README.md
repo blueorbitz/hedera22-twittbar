@@ -26,3 +26,5 @@
 - [Stratos JS Rollup Demo](https://github.com/buidler-labs/hsj-rollup-demo)
 - [PR to fix fail example](https://github.com/buidler-labs/hsj-rollup-demo/pull/1)
 - [Twitter DM](https://github.com/PLhery/node-twitter-api-v2/blob/77f48eb5e06e2a15fd0f6906adecc1678801f75d/doc/examples.md#direct-messages)
+- [Next Auth](https://spacejelly.dev/posts/how-to-authenticate-next-js-apps-with-twitter-nextauth-js/)
+- [Next Auth Upgrade](https://next-auth.js.org/getting-started/upgrade-v4#next-authreact)

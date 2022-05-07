@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import { Hbar } from '@hashgraph/sdk'
-import { timeSince } from '../helpers/utils'
+import { timeSince, isHashpackConnected } from '../helpers/utils'
+
 
 export default function AppRecent({ refreshComponent }) {
   const limit = 3;
@@ -9,10 +10,13 @@ export default function AppRecent({ refreshComponent }) {
   const [transactions, setTransactions] = useState([]);
 
   const fetchData = async ({ skip, limit }) => {
+    if (isHashpackConnected() === false)
+      return [];
+
     const params = {
       skip,
       limit,
-      from: `${window.hedera.account.id}`
+      from: `${window.hashpack.account.id}`
     };
     const res = await axios.get('/api/transaction', { params });
     return res.data;
