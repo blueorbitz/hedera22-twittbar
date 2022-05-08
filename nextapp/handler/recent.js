@@ -28,6 +28,7 @@ async function getRecent(query) {
 
   // get twitter user details
   const uniqueTo = results.map(o => o.to).filter((value, index, self) => self.indexOf(value) === index);
+  console.log('uniqueTo', uniqueTo);
 
   const client = TwitterClient.v2();
   const tresults = await client.get('users/by', {
