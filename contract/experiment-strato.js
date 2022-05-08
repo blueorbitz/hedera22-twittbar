@@ -32,7 +32,7 @@ async function ConnectToContract(contractId = "0.0.34376129") {
 }
 
 async function main() {
-  const { liveContract } = await ConnectToContract();
+  const { liveContract } = await CreateNewContract();
   console.log(Object.keys(liveContract.interface.functions));
 
   const balance = await liveContract.checkBalance({ onlyReceipt: false });

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    CONTRACT_ID: '0.0.34376129',
+    CONTRACT_ID: process.env.CONTRACT_ID,
   },
 }
 
