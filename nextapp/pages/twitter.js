@@ -56,7 +56,7 @@ function AppHeader() {
           <span className="fs-4">Home <small className='text-muted'>testnet</small></span>
         </Link>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <Link className="py-2 text-dark text-decoration-none" href="#" onClick={signOut}>Logout</Link>
+          <button className="btn btn-light py-2 text-dark" onClick={signOut}>Logout</button>
         </nav>
       </div>
       <div className="pricing-header p-3 pb-md-4 mx-auto text-center">

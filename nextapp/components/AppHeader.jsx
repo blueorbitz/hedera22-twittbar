@@ -34,7 +34,7 @@ export default function AppHeader() {
         </Link>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
           <span className="py-2 me-3 text-primary text-decoration-none">Balance {accountBalance}</span>
-          <Link className="py-2 text-dark text-decoration-none" href="#" onClick={onLogout}>Logout</Link>
+          <button className="btn btn-light py-2 text-dark" onClick={onLogout}>Logout</button>
         </nav>
       </div>
 
