@@ -30,10 +30,10 @@ function timeSince(date) {
 function isHashpackConnected() {
   const HASHPACK_STORAGE_KEY = "hashpack-session";
 
-  if (!window.hashpack)
+  if (!window.hedera)
     return false;
   
-  if (window.hashpack && window.hashpack.constructor.name !== 'HashPackWallet')
+  if (window.hedera && window.hedera.constructor.name !== 'HashPackWallet')
     return false;
   
   const localWalletData = localStorage.getItem(HASHPACK_STORAGE_KEY);

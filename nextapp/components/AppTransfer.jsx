@@ -34,11 +34,12 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
       const contractId = process.env.CONTRACT_ID; // TODO: to env
       const vaultContract = await Contract.newFrom({ path: './TwitterVaultAPI.sol' });
       const liveContract = await session.getLiveContract({ id: contractId, abi: vaultContract.interface });
+      window.a = liveContract
       const receiptsSubscription = session.subscribeToReceiptsWith(
         ({ transaction, receipt }) => {
           axios.post('/api/transaction', {
             transactionId: `${transaction.transactionId}`,
-            from: `${liveContract.session.wallet.account.id}`,
+            from: `${window.hedera.getAccountId()}`,
             to: username,
             timestamp: new Date().getTime(),
             amount: amount,
@@ -50,11 +51,9 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
         }
       );
 
-      const transactionId = TransactionId.generate(liveContract.session.wallet.account.id);
       const metaArgs = {
         amount: amount,
         // maxTransactionFee: new Hbar(1),
-        transactionId: transactionId,
         transactionMemo: `Transfer to @${username}!`,
         transactionValidDuration: 69,
         emitReceipt: true,

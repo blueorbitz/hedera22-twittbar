@@ -21,7 +21,7 @@ async function connectToHashPack(skipNewConnection = false) {
     });
   }
 
-  window["hashpack"] = wallet;
+  window.hedera = wallet;
 }
 
 // // dApp logic flow

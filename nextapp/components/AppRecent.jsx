@@ -15,7 +15,7 @@ export default function AppRecent({ refreshComponent }) {
     const params = {
       skip,
       limit,
-      from: `${window.hashpack.account.id}`
+      from: `${window.hedera.account.id}`
     };
     const res = await axios.get('/api/transaction', { params });
     return res.data;

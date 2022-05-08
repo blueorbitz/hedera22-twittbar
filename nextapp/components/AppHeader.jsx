@@ -12,7 +12,7 @@ export default function AppHeader() {
       if (isHashpackConnected() === false)
         return;
 
-      const wallet = await window.hashpack.getAccountBalance();
+      const wallet = await window.hedera.getAccountBalance();
       setAccountbalance(wallet.hbars.toString());
     }
     const timer = setInterval(fetchData, 1500);
@@ -22,7 +22,7 @@ export default function AppHeader() {
   const onLogout = async () => {
     if (isHashpackConnected() === false)
       return;
-    window.hashpack.wipePairingData();
+    window.hedera.wipePairingData();
     router.push({ pathname: '/login' });
   }
 
