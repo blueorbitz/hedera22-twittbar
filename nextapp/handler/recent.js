@@ -3,7 +3,7 @@ import { insertSchema, querySchema } from '../helpers/schema';
 import { HttpError } from '../helpers/HttpError';
 import TwitterClient from '../helpers/TwitterClient';
 
-const MONGODB_COLLECTION = 'test'; // Todo: update to better name
+const MONGODB_COLLECTION = process.env.MONGODB_COLLECTION; // Todo: update to better name
 
 async function getRecent(query) {
   const validate = querySchema.validate(query, { convert: true });
