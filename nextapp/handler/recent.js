@@ -59,7 +59,8 @@ async function postRecent(body) {
     return mresult;
 
   const t2client = TwitterClient.v2();
-  const t2result = await t2client.get('users/by/username/' + validate.value.handle);
+  const t2result = await t2client.get('users/by/username/' + validate.value.to);
+  console.log(t2result);
   const recipientId = t2result.data.id;
 
   const t1client = TwitterClient.v1();

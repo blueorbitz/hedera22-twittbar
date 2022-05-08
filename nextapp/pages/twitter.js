@@ -15,6 +15,7 @@ import { timeSince } from '../helpers/utils'
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
+  const processing = useState(false);
 
   useEffect(() => {
     if (!session)
@@ -30,7 +31,7 @@ export default function Home() {
       </Head>
       <div className="container py-3">
         <AppHeader />
-        <AppBody />
+        <AppBody processing={processing}/>
         <AppRecent />
         <AppFooter />
         <ToastContainer
@@ -67,27 +68,35 @@ function AppHeader() {
   );
 }
 
-function AppBody() {
+function AppBody({ processing }) {
+  const [isProcessing, setProcessing] = processing;
+
   const onMapAccount = async (event) => {
     event.preventDefault();
     try {
+      setProcessing(true);
       const account = document.getElementsByName('accountId')[0].value;
       await axios.post('/api/contract/map', { account });
-      toast.success(`Successfully release pending fund.`);
+      toast.success(`Successfully map account.`);
     } catch (error) {
       console.error(error.message || error.error);
       toast.error(error.message || error.error);
+    } finally {
+      setProcessing(false);
     }
   }
 
   const onReleaseFund = async (event) => {
     event.preventDefault();
     try {
+      setProcessing(true);
       await axios.post('/api/contract/release');
       toast.success(`Successfully release pending fund.`);
     } catch (error) {
       console.log(error.message || error.error);
       toast.error(error.message || error.error);
+    } finally {
+      setProcessing(false);
     }
   }
 
@@ -112,13 +121,14 @@ function AppBody() {
           <div>3. Paste your Hedera <strong><i>Account Id</i></strong> here.</div>
           <input type="text" style={{ width: '300px' }}
             className="form-control" name="accountId"
+            disabled={isProcessing}
             placeholder='eg. 0.0.312334'
           />
           <div className="btn-group">
-            <button className="mt-3 btn btn-secondary" onClick={onMapAccount}>
+            <button className="mt-3 btn btn-secondary" onClick={onMapAccount}  disabled={isProcessing}>
               Map Account
             </button>
-            <button className="mt-3 btn btn-primary" onClick={onReleaseFund}>
+            <button className="mt-3 btn btn-primary" onClick={onReleaseFund}  disabled={isProcessing}>
               Release Fund
             </button>
           </div>

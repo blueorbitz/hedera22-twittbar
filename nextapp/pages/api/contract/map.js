@@ -23,7 +23,13 @@ async function mapHederaAccount(body, session) {
     const { liveContract } = await ConnectToContract();
     console.log('LiveContract call: updateHandleAddress()');
     const solidityAddress = AccountId.fromString(validate.value.account).toSolidityAddress();
-    const data = await liveContract.updateHandleAddress(validate.value.handle, solidityAddress);
+
+    const metaArgs = {
+      transactionMemo: `@${validate.value.handle} map account ${validate.value.account}`,
+      transactionValidDuration: 69,
+      emitReceipt: true,
+    };
+    const data = await liveContract.updateHandleAddress(metaArgs, validate.value.handle, solidityAddress);
     console.log(data);
   } catch (error) {
     throw new HttpError(error.message, 400);

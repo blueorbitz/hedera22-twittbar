@@ -34,7 +34,6 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
       const contractId = process.env.CONTRACT_ID; // TODO: to env
       const vaultContract = await Contract.newFrom({ path: './TwitterVaultAPI.sol' });
       const liveContract = await session.getLiveContract({ id: contractId, abi: vaultContract.interface });
-      window.a = liveContract
       const receiptsSubscription = session.subscribeToReceiptsWith(
         ({ transaction, receipt }) => {
           axios.post('/api/transaction', {
@@ -54,7 +53,7 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
       const metaArgs = {
         amount: amount,
         // maxTransactionFee: new Hbar(1),
-        transactionMemo: `Transfer to @${username}!`,
+        transactionMemo: `Transfer to @${username}`,
         transactionValidDuration: 69,
         emitReceipt: true,
       };
