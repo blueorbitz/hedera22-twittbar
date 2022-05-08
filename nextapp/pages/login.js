@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import styles from '../styles/Signin.module.css'
 import { signIn, signOut, useSession, } from 'next-auth/react';
 
@@ -53,8 +54,10 @@ export default function Signin() {
               ? <div className="w-100 btn btn-lg btn-primary" onClick={signIn}>Sign in to Twitter</div>
               : <div className="w-100 btn btn-lg btn-primary" onClick={signOut}>Sign out from Twitter</div>
           }
-          <img className="mt-5" src="/built-on-hedera.png" alt="" width="120"></img>
-          <p className="mb-3 text-muted">choong.pw &copy; 2022</p>
+          <div className='my-5'>
+          <Image className="mt-1" src="/built-on-hedera.png" alt="" width={120} height={60} objectFit={'contain'}/>
+          <p className="text-muted">choong.pw &copy; 2022</p>
+          </div>
         </form>
       </main>
     </div>

@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
@@ -50,11 +52,11 @@ function AppHeader() {
   return (
     <header>
       <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-        <a href="/" className="d-flex align-items-center text-dark text-decoration-none">
+        <Link href="/" className="d-flex align-items-center text-dark text-decoration-none">
           <span className="fs-4">Home <small className='text-muted'>testnet</small></span>
-        </a>
+        </Link>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <a className="py-2 text-dark text-decoration-none" href="#" onClick={signOut}>Logout</a>
+          <Link className="py-2 text-dark text-decoration-none" href="#" onClick={signOut}>Logout</Link>
         </nav>
       </div>
       <div className="pricing-header p-3 pb-md-4 mx-auto text-center">
@@ -96,11 +98,13 @@ function AppBody() {
           <h4>How to receive the Fund</h4>
           <div>1. <a
             href="https://chrome.google.com/webstore/detail/hashpack/gjagmgiddbbciopjhllkdnddhcglnemk"
+            rel="noreferrer"
             target="_blank">
             Install Hashpack extension
           </a></div>
           <div>2. <a
             href="https://www.hashpack.app/post/how-to-create-your-first-account-with-hashpack"
+            rel="noreferrer"
             target="_blank"
           >
             Create your first account with HashPack
@@ -142,7 +146,6 @@ function AppRecent() {
     const res = await axios.get('/api/transaction', { params });
     return res.data;
   }
-  
 
   const loadMore = async () => {
     if (skip === -1)
@@ -189,12 +192,12 @@ function AppRecent() {
                 aria-current="true"
                 target="_blank"
               >
-                <img src={profileImage} alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
+                <Image src={profileImage} width={48} height={32} className="rounded-circle flex-shrink-0" />
                 <div className="d-flex gap-2 w-100 justify-content-between">
                   <div>
                     <h6 className="mb-0">
                       {`${new Hbar(amount).toString()} from `}
-                      <a href={`https://testnet.dragonglass.me/hedera/accounts/${from}`} target="_blank">
+                      <a href={`https://testnet.dragonglass.me/hedera/accounts/${from}`} rel="noreferrer" target="_blank">
                         <strong><i>{from}</i></strong>
                       </a>
                     </h6>

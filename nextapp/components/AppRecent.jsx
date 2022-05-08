@@ -70,7 +70,7 @@ export default function AppRecent({ refreshComponent }) {
                   <div>
                     <h6 className="mb-0">
                       {`${new Hbar(amount).toString()} to `}
-                      <a href={`https://twitter.com/${to}`} target="_blank">
+                      <a href={`https://twitter.com/${to}`} rel="noreferrer" target="_blank">
                         <strong><i>{to}</i></strong>
                         {
                           twitter && twitter.verified &&

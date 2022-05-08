@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { isHashpackConnected } from '../helpers/utils';
 
 export default function AppHeader() {
@@ -28,12 +29,12 @@ export default function AppHeader() {
   return (
     <header>
       <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-        <a href="/" className="d-flex align-items-center text-dark text-decoration-none">
+        <Link href="/" className="d-flex align-items-center text-dark text-decoration-none">
           <span className="fs-4">Home <small className='text-muted'>testnet</small></span>
-        </a>
+        </Link>
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
           <span className="py-2 me-3 text-primary text-decoration-none">Balance {accountBalance}</span>
-          <a className="py-2 text-dark text-decoration-none" href="#" onClick={onLogout}>Logout</a>
+          <Link className="py-2 text-dark text-decoration-none" href="#" onClick={onLogout}>Logout</Link>
         </nav>
       </div>
 
