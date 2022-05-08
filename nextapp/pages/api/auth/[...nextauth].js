@@ -3,6 +3,7 @@ import TwitterProvider from 'next-auth/providers/twitter';
 import TwitterClient from '../../../helpers/TwitterClient';
 
 export default NextAuth({
+  secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     TwitterProvider({
       clientId: process.env.TWITTER_CONSUMER_KEY,
