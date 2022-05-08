@@ -87,7 +87,7 @@ export default function AppRecent({ refreshComponent }) {
           })
         }
         {
-          skip === -1 ? null :
+          transactions.length === 0 || skip === -1 ? null :
             <div className="list-group-item list-group-item-action d-flex gap-3 py-3" onClick={loadMore}>
               <div className="d-flex gap-2 w-100 justify-content-center">
                 <small className="opacity-50 text-nowrap">more...</small>
