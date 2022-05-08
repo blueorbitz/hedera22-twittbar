@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Hbar } from '@hashgraph/sdk'
 import { timeSince, isHashpackConnected } from '../helpers/utils'
 
-
 export default function AppRecent({ refreshComponent }) {
   const limit = 3;
   const [skip, setSkip] = useState(0);

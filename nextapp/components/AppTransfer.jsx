@@ -62,8 +62,8 @@ export default function AppTransfer({ refreshComponent, setRefreshComponent }) {
       const data = await liveContract.transferFund(metaArgs, username);
       console.log(`Success TransactionId:`, data);
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      console.error(error.message || error.error);
+      toast.error(error.message || error.error);
     } finally {
       setProcessing(false);
     }
