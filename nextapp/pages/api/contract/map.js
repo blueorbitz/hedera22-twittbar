@@ -4,8 +4,6 @@ import { accountMapSchema } from '../../../helpers/schema';
 import { getSession } from "next-auth/react";
 import { AccountId } from '@hashgraph/sdk';
 
-const { liveContract } = await ConnectToContract();
-
 export default async function handler(req, res) {
   HttpErrorHandler(req, res, {
     postFn: async (body) => {
@@ -22,6 +20,7 @@ async function mapHederaAccount(body, session) {
     throw new HttpError(validate.error.message, 400);
 
   try {
+    const { liveContract } = await ConnectToContract();
     console.log('LiveContract call: updateHandleAddress()');
     const solidityAddress = AccountId.fromString(validate.value.account).toSolidityAddress();
 
