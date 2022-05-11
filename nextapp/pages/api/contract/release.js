@@ -20,7 +20,7 @@ async function releaseFund({ user }) {
     const { liveContract } = await ConnectToContract();
     console.log('LiveContract call: releaseFund()');
     const metaArgs = {
-      maxTransactionFee: new Hbar(1),
+      // maxTransactionFee: new Hbar(1),
       transactionMemo: `@${validate.value.handle} Release Fund`,
       transactionValidDuration: 69,
       emitReceipt: true,
