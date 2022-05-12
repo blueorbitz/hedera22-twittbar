@@ -1,6 +1,13 @@
 # Twittbar
 
+In the world of cryptocurrency, we are bombarded with many different kinds of wallets to use. 
+
+We want to make transfer easy for people that have yet to onboard or has their crypto-wallet ready. At least say, they are not being pressured to create a wallet on the go while still retaining ownership of the fund that was transferred to them.
+
+The thought of using a smart contract and linking the Twitter **handle(username)** to a **wallet address** helps to make the transfer easy. At the same time, we also get the benefit of transferring funds using a recognizable name.
+
 ## Video & Demo
+https://youtu.be/KenCNpK1bu0
 
 ## Pre-requisite
 - Create a developer account with [Hedera Portal](https://portal.hedera.com)
@@ -26,6 +33,9 @@
 - start `ngrok http 3000`
   + This is needed due to "HashPack" only validate from `https://`.
 
+## Deploy to heroku
+`git subtree push --prefix nextapp heroku master`
+
 ## Philosophy
 - `contract` directory
   + mainly to facilitating to experiment and develop smart contract
@@ -40,6 +50,18 @@
   + on the page, it guide user to setup the wallet and update their wallet to the oracle smart contract.
   + the user also get to see the list of fund that is transferred to them via this service.
   + the used of MongoDB is to store the transaction for query. However, the source of truth is will be on the chain itself.
+
+# How we built it
+We use Hedera smart contract. More specifically, we use the Strato library to communicate with the smart contract. We use Twitter API which to validate the user and send a notification to them when there is a fund transferred to their name.
+
+![Data flow](http://choong.pw/wp-content/uploads/2022/05/twittbar-dataflow.png)
+
+# Improvement
+- This maybe costly (gas fee) if not optimize to query from MongoDB.
+  + Certain API depends on reading the value from Smart Contract.
+  + Can consider check for changes before update smart contract to reduce cost.
+- Additional work flow for user to directly update Hedera Account within the DM.
+- Expanding similar use case to other social media platform.
 
 # Reference link
 - [Get started with smart contract](https://hedera.com/blog/how-to-deploy-smart-contracts-on-hedera-part-1-a-simple-getter-and-setter-contract)
@@ -59,9 +81,3 @@
 - [Next Auth Example](https://spacejelly.dev/posts/how-to-authenticate-next-js-apps-with-twitter-nextauth-js/)
 - [Next Auth Example](https://spacejelly.dev/posts/how-to-make-twitter-api-requests-with-nextauth-js-session-tokens/)
 - [Get started with smart contract](https://hedera.com/blog/how-to-deploy-smart-contracts-on-hedera-part-1-a-simple-getter-and-setter-contract)
-
-# Improvement
-- This maybe costly (gas fee) if not optimize to query from MongoDB.
-  + Certain API depends on reading the value from Smart Contract.
-  + Can consider check for changes before update smart contract to reduce cost.
-- Additional work flow for user to directly update Hedera Account within the DM.
